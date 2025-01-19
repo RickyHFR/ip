@@ -1,15 +1,11 @@
 public class Task {
     protected String description;
     protected boolean isDone;
-    public static int totalTaskNumber = 0;
-    private final int taskNumber;
 
 
     public Task(String input) {
         this.description = input;
         this.isDone = false;
-        taskNumber = totalTaskNumber;
-        totalTaskNumber++;
     }
 
     public String getStatusIcon() {

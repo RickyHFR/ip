@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.regex.*;
+import java.util.ArrayList;
 
 public class Ricky {
     public static void main(String[] args) throws RickyException {
@@ -9,7 +9,7 @@ public class Ricky {
         String greetingMsg3 = "Bye. Hope to see you again soon!\n";
         System.out.println(greetingLine + greetingMsg1 + greetingMsg2 + greetingLine);
 
-        Task[] taskList = new Task[100];
+        ArrayList<Task> taskList = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         boolean endService = false;
@@ -25,20 +25,20 @@ public class Ricky {
                 case "list":
                     System.out.println(greetingLine);
                     System.out.println("Here are the tasks in your list:\n");
-                    for (int i = 0; i < Task.totalTaskNumber; i++) {
-                        System.out.printf(String.valueOf(i + 1) + "." + taskList[i].toString() + "\n");
+                    for (int i = 0; i < taskList.size(); i++) {
+                        System.out.printf("%d. %s\n", i, taskList.get(i).toString());
                     }
                     System.out.println(greetingLine);
                     break;
                 default:
                     switch (usrRequest[0]) {
                         case "mark":
-                            taskList[Integer.parseInt(usrRequest[1]) - 1].markDone();
-                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + "  " + taskList[Integer.parseInt(usrRequest[1]) - 1].toString() + "\n" + greetingLine);
+                            taskList.get(Integer.parseInt(usrRequest[1]) - 1).markDone();
+                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + "  " + taskList.get(Integer.parseInt(usrRequest[1]) - 1).toString() + "\n" + greetingLine);
                             break;
                         case "unmark":
-                            taskList[Integer.parseInt(usrRequest[1]) - 1].markUndone();
-                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList[Integer.parseInt(usrRequest[1]) - 1].toString() + "\n" + greetingLine);
+                            taskList.get(Integer.parseInt(usrRequest[1]) - 1).markUndone();
+                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList.get(Integer.parseInt(usrRequest[1]) - 1).toString() + "\n" + greetingLine);
                             break;
                         case "todo":
                             input = input.substring(input.indexOf(" ") + 1).trim();
@@ -46,10 +46,10 @@ public class Ricky {
                                 throw new RickyException("OOPS!!! The description of a todo cannot be empty.");
                             }
                             ToDo newTask = new ToDo(input);
+                            taskList.add(newTask);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" + "  " + newTask.toString() + "\n");
-                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
-                            taskList[Task.totalTaskNumber - 1] = newTask;
                             break;
                         case "deadline":
                             input = input.substring(input.indexOf(" ") + 1);
@@ -68,10 +68,10 @@ public class Ricky {
                                 throw new RickyException("OOPS!!! The description of a deadline cannot be empty.");
                             }
                             Deadline newDeadline = new Deadline(description, by);
+                            taskList.add(newDeadline);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newDeadline.toString() + "\n");
-                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
-                            taskList[Task.totalTaskNumber - 1] = newDeadline;
                             break;
                         case "event":
                             input = input.substring(input.indexOf(" ") + 1);
@@ -94,9 +94,23 @@ public class Ricky {
                             }
                             Event newEvent = new Event(description, from, to);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent.toString() + "\n");
-                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            taskList.add(newEvent);
+                            System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
-                            taskList[Task.totalTaskNumber - 1] = newEvent;
+                            break;
+                        case "delete":
+                            if (usrRequest.length == 1) {
+                                throw new RickyException("OOPS!!! Please specify the task number to delete.");
+                            }
+                            int taskNum = Integer.parseInt(usrRequest[1]);
+                            if (taskNum > taskList.size() || taskNum <= 0) {
+                                throw new RickyException("OOPS!!! Please enter a valid task number.");
+                            }
+                            Task deletedTask = taskList.get(taskNum - 1);
+                            taskList.remove(taskNum - 1);
+                            System.out.println(greetingLine + "Noted. I've removed this task:\n" + "  " + deletedTask.toString() + "\n");
+                            System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
+                            System.out.println(greetingLine);
                             break;
                         default:
                             throw new RickyException();
