@@ -47,7 +47,7 @@ public class Ricky {
                             }
                             ToDo newTask = new ToDo(input);
                             taskList.add(newTask);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" + "  " + newTask.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" + "  " + newTask + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
                             break;
@@ -69,7 +69,7 @@ public class Ricky {
                             }
                             Deadline newDeadline = new Deadline(description, by);
                             taskList.add(newDeadline);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newDeadline.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newDeadline + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
                             break;
@@ -93,7 +93,7 @@ public class Ricky {
                                 throw new RickyException("OOPS!!! The end time of an event cannot be empty.");
                             }
                             Event newEvent = new Event(description, from, to);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent + "\n");
                             taskList.add(newEvent);
                             System.out.printf("Now you have %d tasks in the list.\n", taskList.size());
                             System.out.println(greetingLine);
