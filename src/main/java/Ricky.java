@@ -51,12 +51,15 @@ public class Ricky {
                             break;
                         case "deadline":
                             input = input.substring(input.indexOf(" ") + 1);
-                            Pattern pattern = Pattern.compile("/by (.*)");
-                            Matcher matcher = pattern.matcher(input);
-                            String by = matcher.group(1).trim();
-                            Pattern descriptionPattern = Pattern.compile("(.*) /by");
-                            Matcher descriptionMatcher = descriptionPattern.matcher(input);
-                            String description = descriptionMatcher.group(1).trim();
+                            int index = input.indexOf("/by");
+                            String by;
+                            if (index == -1) {
+                                System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
+                                break;
+                            } else {
+                                by = input.substring(index + 3).trim();
+                            }
+                            String description = input.substring(0, index).trim();
                             Deadline newDeadline = new Deadline(description, by);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" + newDeadline.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
@@ -65,16 +68,16 @@ public class Ricky {
                             break;
                         case "event":
                             input = input.substring(input.indexOf(" ") + 1);
-                            Pattern fromPattern = Pattern.compile("/from (.*?) /to");
-                            Matcher fromMatcher = fromPattern.matcher(input);
-                            String from = fromMatcher.group(1).trim();
-                            Pattern toPattern = Pattern.compile("/to (.*)");
-                            Matcher toMatcher = toPattern.matcher(input);
-                            String to = toMatcher.group(1).trim();
-                            Pattern descriptionPatternE = Pattern.compile("(.*) /from");
-                            Matcher descriptionMatcherE = descriptionPatternE.matcher(input);
-                            String descriptionE = descriptionMatcherE.group(1).trim();
-                            Event newEvent = new Event(descriptionE, from, to);
+                            int fromIndex = input.indexOf("/from");
+                            int toIndex = input.indexOf("/to");
+                            if (fromIndex == -1 || toIndex == -1) {
+                                System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
+                                break;
+                            }
+                            description = input.substring(0, fromIndex).trim();
+                            String from = input.substring(fromIndex + 5, toIndex).trim();
+                            String to = input.substring(toIndex + 3).trim();
+                            Event newEvent = new Event(description, from, to);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" + newEvent.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
                             System.out.println(greetingLine);
