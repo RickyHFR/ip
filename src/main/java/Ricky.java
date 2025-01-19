@@ -3,7 +3,7 @@ import java.util.regex.*;
 
 public class Ricky {
     public static void main(String[] args) {
-        String greetingLine = "_______________________________________________________\n";
+        String greetingLine = "____________________________________________________________\n";
         String greetingMsg1 = "Hello! I'm Ricky.\n";
         String greetingMsg2 = "What can I do for you?\n";
         String greetingMsg3 = "Bye. Hope to see you again soon!\n";
@@ -27,7 +27,7 @@ public class Ricky {
                     System.out.println(greetingLine);
                     System.out.println("Here are the tasks in your list:\n");
                     for (int i = 0; i < Task.totalTaskNumber; i++) {
-                        System.out.printf(String.valueOf(i) + "." + taskList[i].toString() + "\n");
+                        System.out.printf(String.valueOf(i + 1) + "." + taskList[i].toString() + "\n");
                     }
                     System.out.println(greetingLine);
                     break;
@@ -35,16 +35,16 @@ public class Ricky {
                     switch (usrRequest[0]) {
                         case "mark":
                             taskList[Integer.parseInt(usrRequest[1])].markDone();
-                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + "  " + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
                             break;
                         case "unmark":
                             taskList[Integer.parseInt(usrRequest[1])].markUndone();
-                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
                             break;
                         case "todo":
                             input = input.substring(input.indexOf(" ") + 1);
                             ToDo newTask = new ToDo(input);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newTask.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" + "  " + newTask.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
                             System.out.println(greetingLine);
                             taskList[Task.totalTaskNumber - 1] = newTask;
@@ -61,7 +61,7 @@ public class Ricky {
                             }
                             String description = input.substring(0, index).trim();
                             Deadline newDeadline = new Deadline(description, by);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newDeadline.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newDeadline.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
                             System.out.println(greetingLine);
                             taskList[Task.totalTaskNumber - 1] = newDeadline;
@@ -78,7 +78,7 @@ public class Ricky {
                             String from = input.substring(fromIndex + 5, toIndex).trim();
                             String to = input.substring(toIndex + 3).trim();
                             Event newEvent = new Event(description, from, to);
-                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newEvent.toString() + "\n");
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
                             System.out.println(greetingLine);
                             taskList[Task.totalTaskNumber - 1] = newEvent;
