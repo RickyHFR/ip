@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.*;
 
 public class Ricky {
     public static void main(String[] args) {
@@ -26,20 +27,62 @@ public class Ricky {
                     System.out.println(greetingLine);
                     System.out.println("Here are the tasks in your list:\n");
                     for (int i = 0; i < Task.totalTaskNumber; i++) {
-                        System.out.printf(String.valueOf(i) + "." + taskList[i].toString());
+                        System.out.printf(String.valueOf(i) + "." + taskList[i].toString() + "\n");
                     }
                     System.out.println(greetingLine);
                     break;
                 default:
-                    if (usrRequest[0].equals("mark")) {
-                        taskList[Integer.parseInt(usrRequest[1])].markDone();
-                        System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + greetingLine);
-                    } else if (usrRequest[0].equals("unmark")) {
-                        taskList[Integer.parseInt(usrRequest[1])].markUndone();
-                        System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + greetingLine);
-                    } else {
-                        System.out.println(greetingLine + listHead + input + "\n" + greetingLine);
-                        taskList[Task.totalTaskNumber] = new Task(input);
+                    switch (usrRequest[0]) {
+                        case "mark":
+                            taskList[Integer.parseInt(usrRequest[1])].markDone();
+                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            break;
+                        case "unmark":
+                            taskList[Integer.parseInt(usrRequest[1])].markUndone();
+                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            break;
+                        case "todo":
+                            input = input.substring(input.indexOf(" ") + 1);
+                            ToDo newTask = new ToDo(input);
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newTask.toString() + "\n");
+                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            System.out.println(greetingLine);
+                            taskList[Task.totalTaskNumber - 1] = newTask;
+                            break;
+                        case "deadline":
+                            input = input.substring(input.indexOf(" ") + 1);
+                            Pattern pattern = Pattern.compile("/by (.*)");
+                            Matcher matcher = pattern.matcher(input);
+                            String by = matcher.group(1).trim();
+                            Pattern descriptionPattern = Pattern.compile("(.*) /by");
+                            Matcher descriptionMatcher = descriptionPattern.matcher(input);
+                            String description = descriptionMatcher.group(1).trim();
+                            Deadline newDeadline = new Deadline(description, by);
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newDeadline.toString() + "\n");
+                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            System.out.println(greetingLine);
+                            taskList[Task.totalTaskNumber - 1] = newDeadline;
+                            break;
+                        case "event":
+                            input = input.substring(input.indexOf(" ") + 1);
+                            Pattern fromPattern = Pattern.compile("/from (.*?) /to");
+                            Matcher fromMatcher = fromPattern.matcher(input);
+                            String from = fromMatcher.group(1).trim();
+                            Pattern toPattern = Pattern.compile("/to (.*)");
+                            Matcher toMatcher = toPattern.matcher(input);
+                            String to = toMatcher.group(1).trim();
+                            Pattern descriptionPatternE = Pattern.compile("(.*) /from");
+                            Matcher descriptionMatcherE = descriptionPatternE.matcher(input);
+                            String descriptionE = descriptionMatcherE.group(1).trim();
+                            Event newEvent = new Event(descriptionE, from, to);
+                            System.out.println(greetingLine + "Got it. I've added this task:\n" + newEvent.toString() + "\n");
+                            System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
+                            System.out.println(greetingLine);
+                            taskList[Task.totalTaskNumber - 1] = newEvent;
+                            break;
+                        default:
+                            System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
+                            break;
                     }
             }
         }
