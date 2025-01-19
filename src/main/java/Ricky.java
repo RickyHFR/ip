@@ -2,12 +2,11 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 public class Ricky {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RickyException {
         String greetingLine = "____________________________________________________________\n";
         String greetingMsg1 = "Hello! I'm Ricky.\n";
         String greetingMsg2 = "What can I do for you?\n";
         String greetingMsg3 = "Bye. Hope to see you again soon!\n";
-        String listHead = "added: ";
         System.out.println(greetingLine + greetingMsg1 + greetingMsg2 + greetingLine);
 
         Task[] taskList = new Task[100];
@@ -42,7 +41,10 @@ public class Ricky {
                             System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList[Integer.parseInt(usrRequest[1]) - 1].toString() + "\n" + greetingLine);
                             break;
                         case "todo":
-                            input = input.substring(input.indexOf(" ") + 1);
+                            input = input.substring(input.indexOf(" ") + 1).trim();
+                            if (input.isEmpty()) {
+                                throw new RickyException("OOPS!!! The description of a todo cannot be empty.");
+                            }
                             ToDo newTask = new ToDo(input);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" + "  " + newTask.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
@@ -54,12 +56,17 @@ public class Ricky {
                             int index = input.indexOf("/by");
                             String by;
                             if (index == -1) {
-                                System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
-                                break;
+                                throw new RickyException("Please follow the format: deadline <description> /by <date>");
                             } else {
+                                if (input.substring(index + 3).trim().isEmpty()) {
+                                    throw new RickyException("OOPS!!! The date of a deadline cannot be empty.");
+                                }
                                 by = input.substring(index + 3).trim();
                             }
                             String description = input.substring(0, index).trim();
+                            if (description.isEmpty()) {
+                                throw new RickyException("OOPS!!! The description of a deadline cannot be empty.");
+                            }
                             Deadline newDeadline = new Deadline(description, by);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newDeadline.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
@@ -71,12 +78,20 @@ public class Ricky {
                             int fromIndex = input.indexOf("/from");
                             int toIndex = input.indexOf("/to");
                             if (fromIndex == -1 || toIndex == -1) {
-                                System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
-                                break;
+                                throw new RickyException("Please follow the format: event <description> /from <start time> /to <end time>");
                             }
                             description = input.substring(0, fromIndex).trim();
+                            if (description.isEmpty()) {
+                                throw new RickyException("OOPS!!! The description of an event cannot be empty.");
+                            }
                             String from = input.substring(fromIndex + 5, toIndex).trim();
+                            if (from.isEmpty()) {
+                                throw new RickyException("OOPS!!! The start time of an event cannot be empty.");
+                            }
                             String to = input.substring(toIndex + 3).trim();
+                            if (to.isEmpty()) {
+                                throw new RickyException("OOPS!!! The end time of an event cannot be empty.");
+                            }
                             Event newEvent = new Event(description, from, to);
                             System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent.toString() + "\n");
                             System.out.printf("Now you have %d tasks in the list.\n", Task.totalTaskNumber);
@@ -84,8 +99,7 @@ public class Ricky {
                             taskList[Task.totalTaskNumber - 1] = newEvent;
                             break;
                         default:
-                            System.out.println(greetingLine + "I'm sorry, but I don't know what that means :-(\n" + greetingLine);
-                            break;
+                            throw new RickyException();
                     }
             }
         }
