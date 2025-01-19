@@ -34,12 +34,12 @@ public class Ricky {
                 default:
                     switch (usrRequest[0]) {
                         case "mark":
-                            taskList[Integer.parseInt(usrRequest[1])].markDone();
-                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + "  " + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            taskList[Integer.parseInt(usrRequest[1]) - 1].markDone();
+                            System.out.println(greetingLine + "Nice! I've marked this task as done:\n" + "  " + taskList[Integer.parseInt(usrRequest[1]) - 1].toString() + "\n" + greetingLine);
                             break;
                         case "unmark":
-                            taskList[Integer.parseInt(usrRequest[1])].markUndone();
-                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList[Integer.parseInt(usrRequest[1])].toString() + "\n" + greetingLine);
+                            taskList[Integer.parseInt(usrRequest[1]) - 1].markUndone();
+                            System.out.println(greetingLine + "OK, I've marked this task as not done yet:\n" + "  " + taskList[Integer.parseInt(usrRequest[1]) - 1].toString() + "\n" + greetingLine);
                             break;
                         case "todo":
                             input = input.substring(input.indexOf(" ") + 1);
