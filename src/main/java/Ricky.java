@@ -3,7 +3,9 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Path;
-import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Ricky {
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
@@ -14,7 +16,7 @@ public class Ricky {
         String greetingMsg2 = "What can I do for you?\n";
         String greetingMsg3 = "Bye. Hope to see you again soon!\n";
         System.out.println(greetingLine + greetingMsg1 + greetingMsg2 + greetingLine);
-        ArrayList<Task> taskList = new ArrayList<>();
+        ArrayList<Task> taskList;
         taskList = Storage.loadTasks(filePath);
 
         Scanner scanner = new Scanner(System.in);
@@ -61,14 +63,18 @@ public class Ricky {
                             case "deadline":
                                 input = input.substring(input.indexOf(" ") + 1);
                                 int index = input.indexOf("/by");
-                                String by;
+                                LocalDate by;
                                 if (index == -1) {
                                     throw new RickyException("Please follow the format: deadline <description> /by <date>");
                                 } else {
                                     if (input.substring(index + 3).trim().isEmpty()) {
                                         throw new RickyException("OOPS!!! The date of a deadline cannot be empty.");
                                     }
-                                    by = input.substring(index + 3).trim();
+                                    try {
+                                        by = LocalDate.parse(input.substring(index + 3).trim());
+                                    } catch (Exception e) {
+                                        throw new RickyException("Please follow the format: yyyy-mm-dd");
+                                    }
                                 }
                                 String description = input.substring(0, index).trim();
                                 if (description.isEmpty()) {
@@ -91,13 +97,25 @@ public class Ricky {
                                 if (description.isEmpty()) {
                                     throw new RickyException("OOPS!!! The description of an event cannot be empty.");
                                 }
-                                String from = input.substring(fromIndex + 5, toIndex).trim();
-                                if (from.isEmpty()) {
+                                String fromInput = input.substring(fromIndex + 5, toIndex).trim();
+                                if (fromInput.isEmpty()) {
                                     throw new RickyException("OOPS!!! The start time of an event cannot be empty.");
                                 }
-                                String to = input.substring(toIndex + 3).trim();
-                                if (to.isEmpty()) {
+                                LocalDate from, to;
+                                try {
+                                    from = LocalDate.parse(fromInput);
+                                } catch (Exception e) {
+                                    throw new RickyException("Please follow the format: yyyy-mm-dd");
+                                }
+
+                                String toInput = input.substring(toIndex + 3).trim();
+                                if (toInput.isEmpty()) {
                                     throw new RickyException("OOPS!!! The end time of an event cannot be empty.");
+                                }
+                                try {
+                                    to = LocalDate.parse(toInput);
+                                } catch (Exception e) {
+                                    throw new RickyException("Please follow the format: yyyy-mm-dd");
                                 }
                                 Event newEvent = new Event(description, from, to);
                                 System.out.println(greetingLine + "Got it. I've added this task:\n" +  "  " + newEvent + "\n");
