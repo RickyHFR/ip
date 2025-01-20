@@ -2,14 +2,22 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Ricky {
+    String filePath = "../data/ricky.txt";
+    ArrayList<Task> taskList = new ArrayList<>();
+
+    public void loadTasks() {
+        try {
+            taskList = Storage.loadTasks(filePath);
+        } catch (RickyException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public static void main(String[] args) throws RickyException {
         String greetingLine = "____________________________________________________________\n";
         String greetingMsg1 = "Hello! I'm Ricky.\n";
         String greetingMsg2 = "What can I do for you?\n";
         String greetingMsg3 = "Bye. Hope to see you again soon!\n";
         System.out.println(greetingLine + greetingMsg1 + greetingMsg2 + greetingLine);
-
-        ArrayList<Task> taskList = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         boolean endService = false;
