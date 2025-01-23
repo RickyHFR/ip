@@ -3,9 +3,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.nio.file.Path;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Ricky {
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
@@ -63,7 +62,7 @@ public class Ricky {
                             case "deadline":
                                 input = input.substring(input.indexOf(" ") + 1);
                                 int index = input.indexOf("/by");
-                                LocalDate by;
+                                LocalDateTime by;
                                 if (index == -1) {
                                     throw new RickyException("Please follow the format: deadline <description> /by <date>");
                                 } else {
@@ -71,9 +70,9 @@ public class Ricky {
                                         throw new RickyException("OOPS!!! The date of a deadline cannot be empty.");
                                     }
                                     try {
-                                        by = LocalDate.parse(input.substring(index + 3).trim());
+                                        by = LocalDateTime.parse(input.substring(index + 3).trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
                                     } catch (Exception e) {
-                                        throw new RickyException("Please follow the format: yyyy-mm-dd");
+                                        throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
                                     }
                                 }
                                 String description = input.substring(0, index).trim();
@@ -101,11 +100,11 @@ public class Ricky {
                                 if (fromInput.isEmpty()) {
                                     throw new RickyException("OOPS!!! The start time of an event cannot be empty.");
                                 }
-                                LocalDate from, to;
+                                LocalDateTime from, to;
                                 try {
-                                    from = LocalDate.parse(fromInput);
+                                    from = LocalDateTime.parse(fromInput, DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
                                 } catch (Exception e) {
-                                    throw new RickyException("Please follow the format: yyyy-mm-dd");
+                                    throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
                                 }
 
                                 String toInput = input.substring(toIndex + 3).trim();
@@ -113,7 +112,7 @@ public class Ricky {
                                     throw new RickyException("OOPS!!! The end time of an event cannot be empty.");
                                 }
                                 try {
-                                    to = LocalDate.parse(toInput);
+                                    to = LocalDateTime.parse(toInput, DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
                                 } catch (Exception e) {
                                     throw new RickyException("Please follow the format: yyyy-mm-dd");
                                 }

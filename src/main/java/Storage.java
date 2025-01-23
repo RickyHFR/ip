@@ -2,6 +2,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Storage {
@@ -28,16 +30,16 @@ public class Storage {
                         if (data.length != 4 || (!data[1].equals("0") && !data[1].equals("1"))) {
                             throw new RickyException("Invalid task in file: " + filePath);
                         }
-                        tasks.add(new Deadline(data[2], LocalDate.parse(data[3])));
+
                         if (data[1].equals("1")) {
                             tasks.get(tasks.size() - 1).markDone();
                         }
                         break;
                     case "E":
-                        if (data.length != 5 || (!data[1].equals("0") && !data[1].equals("1"))) {
+                        if (data.length != 5 || (!data[1].equals("0") && !data[1].equals("1"))) {tasks.add(new Deadline(data[2], LocalDateTime.parse(data[3], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
                             throw new RickyException("Invalid task in file: " + filePath);
                         }
-                        tasks.add(new Event(data[2], LocalDate.parse(data[3]), LocalDate.parse(data[4])));
+                        tasks.add(new Event(data[2], LocalDateTime.parse(data[3], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")), LocalDateTime.parse(data[4], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
                         if (data[1].equals("1")) {
                             tasks.get(tasks.size() - 1).markDone();
                         }
