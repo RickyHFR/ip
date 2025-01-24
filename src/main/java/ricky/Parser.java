@@ -1,3 +1,10 @@
+package ricky;
+
+import ricky.command.*;
+import ricky.task.Deadline;
+import ricky.task.Event;
+import ricky.task.ToDo;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

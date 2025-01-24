@@ -1,3 +1,8 @@
+package ricky.command;
+import ricky.Storage;
+import ricky.task.TaskList;
+import ricky.Ui;
+
 public class DeleteCommand extends Command {
     private int index;
 
@@ -7,7 +12,7 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.delete(index);
         ui.printDelete(tasks.get(index - 1), tasks);
+        tasks.delete(index - 1);
     }
 }

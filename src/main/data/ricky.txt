@@ -1,5 +1,5 @@
 T | 1 | read book
-T | 0 | join sports club
-T | 1 | help myself
+T | 0 | help myself
 E | 0 | play | 2025-01-03T18:00 | 2025-01-03T19:00
 T | 0 | hsdfasd
+T | 0 | safhasd
