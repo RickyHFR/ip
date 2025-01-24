@@ -7,10 +7,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Storage {
-    public static ArrayList<Task> loadTasks(Path filePath) throws RickyException, IOException {
+    private final Path filePath;
+
+    public Storage(Path filePath) {
+        this.filePath = filePath;
+    }
+
+    public ArrayList<Task> loadTasks() throws RickyException, IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!Files.exists(filePath)) {
-            Files.createFile(filePath);
+            this.createFile();
         }
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
@@ -56,14 +62,25 @@ public class Storage {
         return tasks;
     }
 
-    public static void storeTasks(Path filePath, ArrayList<Task> tasks) throws RickyException, IOException {
+    public void storeTasks(TaskList tasks) throws RickyException {
+        if (!Files.exists(filePath)) {
+            this.createFile();
+        }
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-            for (Task task : tasks) {
+            for (Task task : tasks.getTasks()) {
                 writer.write(task.store());
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new RickyException("Error writing file: " + filePath);
+            throw new RickyException("Error writing to file: " + filePath);
+        }
+    }
+
+    public void createFile() {
+        try {
+            Files.createDirectories(filePath.getParent());
+        } catch (IOException e) {
+            System.err.println("Error creating directory: " + filePath.getParent());
         }
     }
 }
