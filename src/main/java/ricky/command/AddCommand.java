@@ -1,3 +1,9 @@
+package ricky.command;
+import ricky.Storage;
+import ricky.task.TaskList;
+import ricky.Ui;
+import ricky.task.Task;
+
 public class AddCommand extends Command {
     private final Task task;
 
