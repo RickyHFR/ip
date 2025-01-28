@@ -58,7 +58,7 @@ public class Ui {
         printLine();
         System.out.println("Noted. I've removed this task:");
         System.out.println(task);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
         printLine();
     }
 
@@ -71,6 +71,12 @@ public class Ui {
     public void showStorageError() {
         printLine();
         System.out.println("Error storing file.");
+        printLine();
+    }
+
+    public void printInvalidCommand() {
+        printLine();
+        System.out.println("I don't know what that means. Please enter a valid command.");
         printLine();
     }
 
