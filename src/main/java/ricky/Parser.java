@@ -8,7 +8,18 @@ import ricky.task.ToDo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Parses user input into commands.
+ */
 public class Parser {
+
+    /**
+     * Parses the user input and returns the corresponding command.
+     *
+     * @param input The user input.
+     * @return The command corresponding to the user input.
+     * @throws RickyException If the user input is invalid.
+     */
     public static Command parse(String input) throws RickyException {
         String[] inputs = input.split(" ");
         String command = inputs[0];
