@@ -1,14 +1,13 @@
 package ricky.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task with a deadline.
  */
 public class Deadline extends Task {
 
-    protected LocalDateTime by;
+    protected final LocalDateTime by;
 
     /**
      * Constructs a Deadline task with the specified description and deadline.
@@ -28,7 +27,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
+        return String.format("[D]%s (by: %s)",
+                super.toString(), by.format(DATE_TIME_FORMATTER));
     }
 
     /**
@@ -37,7 +37,10 @@ public class Deadline extends Task {
      * @return A string representation of the deadline task for storage.
      */
     @Override
-    public String store() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    public String storeInfo() {
+        return String.format("D | %d | %s | %s | %s",
+                isDone ? 1 : 0,
+                description,
+                by);
     }
 }

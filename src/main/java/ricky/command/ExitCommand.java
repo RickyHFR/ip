@@ -2,13 +2,16 @@
  * Represents a command to exit the application.
  */
 package ricky.command;
+
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
+
 /**
  * Represents a command to exit the application.
  */
 public class ExitCommand extends Command{
+
     /**
      * Executes the exit command, saving tasks, printing goodbye message, and exiting the application.
      *

@@ -10,7 +10,7 @@ public class ToDo extends Task {
      *
      * @param description The description of the task.
      */
-    public ToDo(String description) {
+    public ToDo(final String description) {
         super(description);
     }
 
@@ -21,7 +21,7 @@ public class ToDo extends Task {
      */
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return String.format("[T]%s", super.toString());
     }
 
     /**
@@ -30,7 +30,7 @@ public class ToDo extends Task {
      * @return A string representation of the ToDo task for storage.
      */
     @Override
-    public String store() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+    public String storeInfo() {
+        return String.format("T | %d | %s", isDone ? 1 : 0, description);
     }
 }

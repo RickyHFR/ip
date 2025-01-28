@@ -92,7 +92,7 @@ public class Storage {
         }
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Task task : tasks.getTasks()) {
-                writer.write(task.store());
+                writer.write(task.storeInfo());
                 writer.newLine();
             }
         } catch (IOException e) {

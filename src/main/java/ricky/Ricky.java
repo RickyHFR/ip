@@ -11,6 +11,7 @@ import java.nio.file.Path;
  * Initializes and runs the application.
  */
 public class Ricky {
+
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
     private final Storage storage;
     private TaskList tasks;

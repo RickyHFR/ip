@@ -42,8 +42,8 @@ public class TaskTest {
 
     @Test
     public void testStore() {
-        assertEquals(" | 0 | read book", task.store());
+        assertEquals(" | 0 | read book", task.storeInfo());
         task.markDone();
-        assertEquals(" | 1 | read book", task.store());
+        assertEquals(" | 1 | read book", task.storeInfo());
     }
 }
