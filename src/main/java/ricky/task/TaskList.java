@@ -3,10 +3,10 @@ package ricky.task;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskList() {
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
     public TaskList(ArrayList<Task> tasks) {

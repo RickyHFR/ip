@@ -1,9 +1,12 @@
 package ricky.task;
 
+import java.time.format.DateTimeFormatter;
+
 public class Task {
+
     protected String description;
     protected boolean isDone;
-
+    protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
     public Task(String input) {
         this.description = input;
@@ -24,10 +27,10 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + this.getStatusIcon() + "] " + description;
+        return String.format("[%s] %s", this.getStatusIcon(), description);
     }
 
-    public String store() {
-        return " | " + (isDone ? "1" : "0") + " | " + description;
+    public String storeInfo() {
+        return String.format(" | %d | %s", isDone ? 1 : 0, description);
     }
 }

@@ -2,17 +2,17 @@ package ricky.task;
 
 public class ToDo extends Task {
 
-    public ToDo(String description) {
+    public ToDo(final String description) {
         super(description);
     }
 
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return String.format("[T]%s", super.toString());
     }
 
     @Override
-    public String store() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+    public String storeInfo() {
+        return String.format("T | %d | %s", isDone ? 1 : 0, description);
     }
 }

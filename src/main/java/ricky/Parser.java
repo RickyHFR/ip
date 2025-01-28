@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Parser {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
     public static Command parse(String input) throws RickyException {
         String[] inputs = input.split(" ");
         String command = inputs[0];
@@ -41,7 +44,7 @@ public class Parser {
             String[] deadlineInputs = input.substring(9).split(" /by ");
             LocalDateTime by;
             try {
-                by = LocalDateTime.parse(deadlineInputs[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+                by = LocalDateTime.parse(deadlineInputs[1], DATE_TIME_FORMATTER);
             } catch (Exception e) {
                 throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
             }
@@ -50,8 +53,8 @@ public class Parser {
             String[] eventInputs = input.substring(6).split(" /from | /to ");
             LocalDateTime from, to;
             try {
-                from = LocalDateTime.parse(eventInputs[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
-                to = LocalDateTime.parse(eventInputs[2], DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+                from = LocalDateTime.parse(eventInputs[1], DATE_TIME_FORMATTER);
+                to = LocalDateTime.parse(eventInputs[2], DATE_TIME_FORMATTER);
             } catch (Exception e) {
                 throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
             }

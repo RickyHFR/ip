@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 
 public class Ricky {
+
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
     private final Storage storage;
     private TaskList tasks;
@@ -42,6 +43,7 @@ public class Ricky {
             System.exit(1);
         }
     }
+
     public static void main(String[] args) {
         new Ricky(filePath).run();
     }

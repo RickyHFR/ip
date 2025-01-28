@@ -20,6 +20,6 @@ public class EventTest {
         LocalDateTime from = LocalDateTime.parse("2023-12-31T18:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime to = LocalDateTime.parse("2023-12-31T23:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         Event event = new Event("New Year Party", from, to);
-        assertEquals("E | 0 | New Year Party | 2023-12-31T18:00 | 2023-12-31T23:59", event.store());
+        assertEquals("E | 0 | New Year Party | 2023-12-31T18:00 | 2023-12-31T23:59", event.storeInfo());
     }
 }

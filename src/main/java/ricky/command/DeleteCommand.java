@@ -1,10 +1,11 @@
 package ricky.command;
+
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
 
 public class DeleteCommand extends Command {
-    private int index;
+    private final int index;
 
     public DeleteCommand(int index) {
         this.index = index;

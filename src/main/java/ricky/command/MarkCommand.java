@@ -1,9 +1,11 @@
 package ricky.command;
+
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
 
 public class MarkCommand extends Command {
+
     private int index;
     private boolean isDone;
 
