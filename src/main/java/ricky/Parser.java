@@ -56,6 +56,11 @@ public class Parser {
                 throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
             }
             return new AddCommand(new Event(eventInputs[0], from, to));
+        case "find":
+            if (inputs.length == 1) {
+                throw new RickyException("OOPS!!! Please specify the keyword to find.");
+            }
+            return new FindCommand(input.substring(5));
         default:
             return new InvalidCommand();
         }
