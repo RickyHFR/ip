@@ -1,15 +1,18 @@
 package ricky.task;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RickyTest {
+public class ToDoTest {
     @Test
-    public void dummyTest() {
-        assertEquals(2, 2);
+    public void testToString() {
+        ToDo todo = new ToDo("read book");
+        assertEquals("[T][ ] read book", todo.toString());
     }
 
     @Test
-    public void anotherDummyTest() {
-        assertEquals(3, 3);
+    public void testStore() {
+        ToDo todo = new ToDo("read book");
+        assertEquals("T | 0 | read book", todo.store());
     }
 }
