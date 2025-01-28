@@ -137,4 +137,22 @@ public class Ui {
     public String readCommand() {
         return new Scanner(System.in).nextLine();
     }
+
+    /**
+     * Prints a message indicating that a task has been found.
+     *
+     * @param tasks The list of tasks.
+     */
+    public void printFind(TaskList tasks) {
+        printLine();
+        if (tasks.size() == 0) {
+            System.out.println("There are no matching tasks in your list.");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + "." + tasks.get(i));
+            }
+        }
+        printLine();
+    }
 }

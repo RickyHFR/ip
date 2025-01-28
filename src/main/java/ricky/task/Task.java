@@ -62,4 +62,13 @@ public class Task {
     public String storeInfo() {
         return String.format(" | %d | %s", isDone ? 1 : 0, description);
     }
+
+    /**
+     * Returns the description of the task.
+     *
+     * @return The description of the task.
+     */
+    public String getDescription() {
+        return description;
+    }
 }
