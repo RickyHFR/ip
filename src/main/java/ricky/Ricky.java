@@ -6,13 +6,21 @@ import ricky.task.TaskList;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
-
+/**
+ * The main class of the Ricky application.
+ * Initializes and runs the application.
+ */
 public class Ricky {
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructs a Ricky object with the specified file path.
+     *
+     * @param filePath The path of the file to store tasks.
+     */
     public Ricky(Path filePath) {
         storage = new Storage(filePath);
         ui = new Ui();
@@ -24,6 +32,10 @@ public class Ricky {
         }
     }
 
+    /**
+     * Runs the Ricky application.
+     * Continuously reads and executes user commands until an error occurs.
+     */
     public void run() {
         ui.printWelcome();
         try {
@@ -42,6 +54,13 @@ public class Ricky {
             System.exit(1);
         }
     }
+
+    /**
+     * The main method of the Ricky application.
+     * Creates a new Ricky object and runs the application.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         new Ricky(filePath).run();
     }
