@@ -8,6 +8,7 @@ import ricky.Ui;
  * Represents a command to mark a task as done or undone in the task list.
  */
 public class MarkCommand extends Command {
+
     private int index;
     private boolean isDone;
 

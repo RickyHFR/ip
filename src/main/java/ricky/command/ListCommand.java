@@ -8,6 +8,7 @@ import ricky.Ui;
  * Represents a command to list all tasks in the task list.
  */
 public class ListCommand extends Command {
+
     /**
      * Executes the list command, printing all tasks in the task list.
      *

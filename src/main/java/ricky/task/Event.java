@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * Represents a task that occurs within a specific time frame.
  */
 public class Event extends Task {
+
     protected LocalDateTime from;
     protected LocalDateTime to;
 
@@ -30,9 +31,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: "
-                + from.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + " to: "
-                + to.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
+        return String.format("[E]%s (from: %s to: %s)",
+                super.toString(), from.format(DATE_TIME_FORMATTER),
+                to.format(DATE_TIME_FORMATTER));
     }
 
     /**
@@ -41,7 +42,11 @@ public class Event extends Task {
      * @return A string representation of the event task for storage.
      */
     @Override
-    public String store() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+    public String storeInfo() {
+        return String.format("E | %d | %s | %s | %s",
+                isDone ? 1 : 0,
+                description,
+                from,
+                to);
     }
 }

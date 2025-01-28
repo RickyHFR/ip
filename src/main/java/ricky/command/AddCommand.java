@@ -2,6 +2,7 @@
  * Represents a command to add a task to the task list.
  */
 package ricky.command;
+
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;

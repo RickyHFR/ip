@@ -1,5 +1,7 @@
 /**
  * Represents the base class for all commands.
+ * An abstract base class representing a command to be executed.
+ * Subclasses should provide specific implementations for the command logic.
  */
 package ricky.command;
 
@@ -8,18 +10,18 @@ import ricky.task.TaskList;
 import ricky.Ui;
 
 /**
- * Represents a command to be executed.
+ * Represents an abstract command to be executed.
  */
-public class Command {
+public abstract class Command {
+
     /**
      * Executes the command.
+     * Subclasses must implement this method to define specific command behavior.
      *
      * @param tasks   The task list to operate on.
      * @param ui      The UI to interact with the user.
      * @param storage The storage to save the task list.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        // To be overridden by subclasses
-    }
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage);
 }
 

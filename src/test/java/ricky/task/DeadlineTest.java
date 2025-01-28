@@ -18,6 +18,6 @@ public class DeadlineTest {
     public void testStore() {
         LocalDateTime by = LocalDateTime.parse("2023-12-31T23:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         Deadline deadline = new Deadline("submit report", by);
-        assertEquals("D | 0 | submit report | 2023-12-31T23:59", deadline.store());
+        assertEquals("D | 0 | submit report | 2023-12-31T23:59", deadline.storeInfo());
     }
 }

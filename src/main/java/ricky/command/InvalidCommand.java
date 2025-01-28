@@ -8,6 +8,7 @@ import ricky.task.TaskList;
  * Represents a command for an invalid input.
  */
 public class InvalidCommand extends Command{
+
     /**
      * Executes the invalid command, printing an invalid command message.
      *

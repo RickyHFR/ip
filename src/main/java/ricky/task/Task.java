@@ -1,11 +1,15 @@
 package ricky.task;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a task with a description and completion status.
  */
 public class Task {
+
     protected String description;
     protected boolean isDone;
+    protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
     /**
      * Constructs a Task with the specified description.
@@ -47,7 +51,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + this.getStatusIcon() + "] " + description;
+        return String.format("[%s] %s", this.getStatusIcon(), description);
     }
 
     /**
@@ -55,7 +59,7 @@ public class Task {
      *
      * @return A string representation of the task for storage.
      */
-    public String store() {
-        return " | " + (isDone ? "1" : "0") + " | " + description;
+    public String storeInfo() {
+        return String.format(" | %d | %s", isDone ? 1 : 0, description);
     }
 }

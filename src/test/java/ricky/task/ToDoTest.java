@@ -13,6 +13,6 @@ public class ToDoTest {
     @Test
     public void testStore() {
         ToDo todo = new ToDo("read book");
-        assertEquals("T | 0 | read book", todo.store());
+        assertEquals("T | 0 | read book", todo.storeInfo());
     }
 }
