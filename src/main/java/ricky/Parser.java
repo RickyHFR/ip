@@ -57,7 +57,7 @@ public class Parser {
                 }
                 return new AddCommand(new Event(eventInputs[0], from, to));
             default:
-                throw new RickyException();
+                return new InvalidCommand();
         }
     }
 }
