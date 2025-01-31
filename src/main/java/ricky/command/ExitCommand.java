@@ -10,7 +10,7 @@ import ricky.Ui;
 /**
  * Represents a command to exit the application.
  */
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
 
     /**
      * Executes the exit command, saving tasks, printing goodbye message, and exiting the application.

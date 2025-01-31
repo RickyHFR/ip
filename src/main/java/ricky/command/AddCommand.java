@@ -8,6 +8,9 @@ import ricky.task.TaskList;
 import ricky.Ui;
 import ricky.task.Task;
 
+/**
+ * Represents a command to add a task to the task list.
+ */
 public class AddCommand extends Command {
     private final Task task;
 

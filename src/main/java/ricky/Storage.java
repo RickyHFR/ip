@@ -1,8 +1,16 @@
 package ricky;
 
-import ricky.task.*;
+import ricky.task.Deadline;
+import ricky.task.Event;
+import ricky.task.Task;
+import ricky.task.TaskList;
+import ricky.task.ToDo;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -54,7 +62,8 @@ public class Storage {
                     if (data.length != 4 || (!data[1].equals("0") && !data[1].equals("1"))) {
                         throw new RickyException("Invalid task in file: " + filePath);
                     }
-                    tasks.add(new Deadline(data[2], LocalDateTime.parse(data[3], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
+                    tasks.add(new Deadline(data[2], LocalDateTime.parse(data[3],
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
                     if (data[1].equals("1")) {
                         tasks.get(tasks.size() - 1).markDone();
                     }
@@ -63,7 +72,9 @@ public class Storage {
                     if (data.length != 5 || (!data[1].equals("0") && !data[1].equals("1"))) {
                         throw new RickyException("Invalid task in file: " + filePath);
                     }
-                    tasks.add(new Event(data[2], LocalDateTime.parse(data[3], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")), LocalDateTime.parse(data[4], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
+                    tasks.add(new Event(data[2], LocalDateTime.parse(data[3],
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+                            LocalDateTime.parse(data[4], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
                     if (data[1].equals("1")) {
                         tasks.get(tasks.size() - 1).markDone();
                     }
