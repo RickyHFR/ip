@@ -49,9 +49,10 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = ricky.getResponse(input);
+        String commandType = ricky.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, rickyImage)
+                DialogBox.getDukeDialog(response, rickyImage, commandType)
         );
         userInput.clear();
     }

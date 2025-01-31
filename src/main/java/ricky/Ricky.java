@@ -1,5 +1,6 @@
 package ricky;
 
+import ricky.command.Command;
 import ricky.task.TaskList;
 import java.nio.file.Path;
 
@@ -10,6 +11,7 @@ public class Ricky {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
+    private String commandType;
 
     /**
      * Constructs a Ricky object with the specified file path.
@@ -32,10 +34,15 @@ public class Ricky {
      */
     public String getResponse(String input) {
         try {
-            return Parser.parse(input).execute(tasks, ui, storage);
+            Command c = Parser.parse(input);
+            commandType = c.getClass().getSimpleName();
+            return c.execute(tasks, ui, storage);
         } catch (RickyException e) {
             return e.getMessage();
         }
     }
 
+    public String getCommandType() {
+        return commandType;
+    }
 }
