@@ -1,18 +1,12 @@
 package ricky;
 
-import ricky.command.Command;
 import ricky.task.TaskList;
-
-import java.nio.file.Paths;
 import java.nio.file.Path;
 
 /**
- * The main class of the Ricky application.
- * Initializes and runs the application.
+ * Represents the Ricky chatbot.
  */
 public class Ricky {
-
-    private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
@@ -34,35 +28,14 @@ public class Ricky {
     }
 
     /**
-     * Runs the Ricky application.
-     * Continuously reads and executes user commands until an error occurs.
+     * Generates a response for the user's chat message.
      */
-    public void run() {
-        ui.printWelcome();
+    public String getResponse(String input) {
         try {
-            while (true) {
-                String fullCommand = ui.readCommand();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-            }
-        } catch (Exception e) {
-            System.err.println("An error occurred: " + e.getMessage());
-            try {
-                storage.storeTasks(tasks);
-            } catch (Exception ex) {
-                System.err.println("An error occurred while saving tasks: " + ex.getMessage());
-            }
-            System.exit(1);
+            return Parser.parse(input).execute(tasks, ui, storage);
+        } catch (RickyException e) {
+            return e.getMessage();
         }
     }
 
-    /**
-     * The main method of the Ricky application.
-     * Creates a new Ricky object and runs the application.
-     *
-     * @param args Command line arguments.
-     */
-    public static void main(String[] args) {
-        new Ricky(filePath).run();
-    }
 }

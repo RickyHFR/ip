@@ -3,156 +3,124 @@ package ricky;
 import ricky.task.Task;
 import ricky.task.TaskList;
 
-import java.util.Scanner;
-
 /**
  * Handles interactions with the user.
  */
 public class Ui {
 
     /**
-     * Prints a horizontal line.
+     * Returns the welcome message.
+     *
+     * @return the welcome message.
      */
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
+    public String getWelcomeMessage() {
+        return "Hello! I'm Ricky.\nWhat can I do for you?";
     }
 
     /**
-     * Prints the welcome message.
+     * Returns the goodbye message.
+     *
+     * @return the goodbye message.
      */
-    public void printWelcome() {
-        printLine();
-        System.out.println("Hello! I'm Ricky.");
-        System.out.println("What can I do for you?");
-        printLine();
+    public String getGoodbyeMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
-     * Prints the goodbye message.
-     */
-    public void printGoodbye() {
-        printLine();
-        System.out.println("Bye. Hope to see you again soon!");
-        printLine();
-    }
-
-    /**
-     * Prints the list of tasks.
+     * Returns a message listing all tasks.
      *
      * @param tasks The list of tasks.
+     * @return the list message.
      */
-    public void printList(TaskList tasks) {
-        printLine();
-        System.out.println("Here are the tasks in your list:");
+    public String getListMessage(TaskList tasks) {
+        String output = "Here are the tasks in your list:\n";
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            output += (i + 1) + "." + tasks.get(i) + "\n";
         }
-        printLine();
+        return output;
     }
 
     /**
-     * Prints a message indicating that a task has been added.
+     * Returns a message indicating that a task has been added.
      *
      * @param task  The task that was added.
      * @param tasks The list of tasks.
+     * @return the add message.
      */
-    public void printAdd(Task task, TaskList tasks) {
-        printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        printLine();
+    public String getAddMessage(Task task, TaskList tasks) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**
-     * Prints a message indicating that a task has been marked as done.
+     * Returns a message indicating that a task has been marked as done.
      *
      * @param task The task that was marked as done.
+     * @return the mark message.
      */
-    public void printDone(Task task) {
-        printLine();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task);
-        printLine();
+    public String getMarkMessage(Task task) {
+        return "Nice! I've marked this task as done:\n" + task;
     }
 
     /**
-     * Prints a message indicating that a task has been marked as not done.
+     * Returns a message indicating that a task has been marked as not done.
      *
      * @param task The task that was marked as not done.
+     * @return the unmark message.
      */
-    public void printUndone(Task task) {
-        printLine();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task);
-        printLine();
+    public String getUnmarkMessage(Task task) {
+        return "OK, I've marked this task as not done yet:\n" + task;
     }
 
     /**
-     * Prints a message indicating that a task has been deleted.
+     * Returns a message indicating that a task has been deleted.
      *
      * @param task  The task that was deleted.
      * @param tasks The list of tasks.
+     * @return the delete message.
      */
-    public void printDelete(Task task, TaskList tasks) {
-        printLine();
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(task);
-        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
-        printLine();
+    public String getDeleteMessage(Task task, TaskList tasks) {
+        return "Noted. I've removed this task:\n" + task + "\nNow you have " + (tasks.size() - 1)
+                + " tasks in the list.";
     }
 
     /**
      * Prints an error message indicating that there was an error loading the file.
      */
     public void showLoadingError() {
-        printLine();
         System.out.println("Error loading file. Starting with an empty task list.");
-        printLine();
     }
 
     /**
      * Prints an error message indicating that there was an error storing the file.
      */
     public void showStorageError() {
-        printLine();
         System.out.println("Error storing file.");
-        printLine();
     }
 
     /**
-     * Prints a message indicating that the command is invalid.
-     */
-    public void printInvalidCommand() {
-        printLine();
-        System.out.println("I don't know what that means. Please enter a valid command.");
-        printLine();
-    }
-
-    /**
-     * Reads a command from the user.
+     * Returns a message indicating that the command is invalid.
      *
-     * @return The command entered by the user.
+     * @return the invalid command message.
      */
-    public String readCommand() {
-        return new Scanner(System.in).nextLine();
+    public String printInvalidCommand() {
+        return "I don't know what that means. Please enter a valid command.";
     }
 
     /**
-     * Prints a message indicating that a task has been found.
+     * Returns a message listing all matching tasks.
      *
-     * @param tasks The list of tasks.
+     * @param tasks The list of matching tasks.
+     * @return the find message.
      */
-    public void printFind(TaskList tasks) {
-        printLine();
+    public String getFindMessage(TaskList tasks) {
         if (tasks.size() == 0) {
-            System.out.println("There are no matching tasks in your list.");
+            return "There are no matching tasks in your list.";
         } else {
-            System.out.println("Here are the matching tasks in your list:");
+            String output = "Here are the matching tasks in your list:\n";
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.println((i + 1) + "." + tasks.get(i));
+                output += (i + 1) + "." + tasks.get(i) + "\n";
             }
+            return output;
         }
-        printLine();
     }
 }
