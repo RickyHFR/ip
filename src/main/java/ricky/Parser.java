@@ -61,7 +61,8 @@ public class Parser {
             return new AddCommand(new Deadline(deadlineInputs[0], by));
         case "event":
             String[] eventInputs = input.substring(6).split(" /from | /to ");
-            LocalDateTime from, to;
+            LocalDateTime from;
+            LocalDateTime to;
             try {
                 from = LocalDateTime.parse(eventInputs[1], DATE_TIME_FORMATTER);
                 to = LocalDateTime.parse(eventInputs[2], DATE_TIME_FORMATTER);
