@@ -20,13 +20,7 @@ public class ExitCommand extends Command {
      * @param storage The storage to save the task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        try {
-            storage.storeTasks(tasks);
-        } catch (Exception e) {
-            ui.showStorageError();
-        }
-        ui.printGoodbye();
-        System.exit(0);
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "Goodbye! Have a nice day!";
     }
 }
