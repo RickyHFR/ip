@@ -31,6 +31,7 @@ public class Parser {
      */
     public static Command parse(String input) throws RickyException {
         String[] inputs = input.split(" ");
+        assert inputs.length > 0 : "Input should not be empty.";
         String command = inputs[0];
         switch (command) {
         case "bye":
@@ -38,21 +39,25 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "mark":
+            assert inputs.length > 1 : "Task number should be specified.";
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! Please specify the task number.");
             }
             return new MarkCommand(Integer.parseInt(inputs[1]), true);
         case "unmark":
+            assert inputs.length > 1 : "Task number should be specified.";
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! Please specify the task number.");
             }
             return new MarkCommand(Integer.parseInt(inputs[1]), false);
         case "delete":
+            assert inputs.length > 1 : "Task number should be specified.";
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! Please specify the task number to delete.");
             }
             return new DeleteCommand(Integer.parseInt(inputs[1]));
         case "todo":
+            assert inputs.length > 1 : "Description should be specified.";
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! The description of a todo cannot be empty.");
             }
@@ -78,6 +83,7 @@ public class Parser {
             }
             return new AddCommand(new Event(eventInputs[0], from, to));
         case "find":
+            assert inputs.length > 1 : "Keyword should be specified.";
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! Please specify the keyword to find.");
             }
