@@ -5,6 +5,7 @@
  */
 package ricky.command;
 
+import ricky.RickyException;
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
@@ -22,6 +23,6 @@ public abstract class Command {
      * @param ui      The UI to interact with the user.
      * @param storage The storage to save the task list.
      */
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws RickyException;
 }
 
