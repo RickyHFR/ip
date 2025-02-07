@@ -12,6 +12,7 @@ public class Ricky {
     private TaskList tasks;
     private final Ui ui;
     private String commandType;
+    private boolean firstTime = true;
 
     /**
      * Constructs a Ricky object with the specified file path.
@@ -33,6 +34,10 @@ public class Ricky {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
+        if (firstTime) {
+            firstTime = false;
+            return ui.getWelcomeMessage();
+        }
         try {
             Command c = Parser.parse(input);
             commandType = c.getClass().getSimpleName();

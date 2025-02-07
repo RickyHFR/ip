@@ -39,6 +39,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Ricky instance */
     public void setRicky(Ricky r) {
         ricky = r;
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog(ricky.getResponse(""), rickyImage, "Welcome")
+        );
     }
 
     /**
