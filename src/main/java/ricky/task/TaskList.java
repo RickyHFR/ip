@@ -40,6 +40,7 @@ public class TaskList {
      * @return The task at the specified index.
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index should be within the valid range.";
         return tasks.get(index);
     }
 
@@ -58,6 +59,7 @@ public class TaskList {
      * @param index The index of the task to be deleted.
      */
     public void delete(int index) {
+        assert index >= 0 && index < tasks.size() : "Index should be within the valid range.";
         tasks.remove(index);
     }
 
@@ -67,6 +69,7 @@ public class TaskList {
      * @param index The index of the task to be marked as done.
      */
     public void markDone(int index) {
+        assert index >= 0 && index < tasks.size() : "Index should be within the valid range.";
         tasks.get(index).markDone();
     }
 
@@ -76,6 +79,7 @@ public class TaskList {
      * @param index The index of the task to be marked as undone.
      */
     public void markUndone(int index) {
+        assert index >= 0 && index < tasks.size() : "Index should be within the valid range.";
         tasks.get(index).markUndone();
     }
 
