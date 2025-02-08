@@ -30,8 +30,10 @@ public class Parser {
      * @throws RickyException If the user input is invalid.
      */
     public static Command parse(String input) throws RickyException {
-        String[] inputs = input.trim().split(" ");
-        String command = inputs[0].trim().toLowerCase();
+        String[] inputs = input.split(" ");
+        int INPUT_LENGTH = inputs.length;
+        assert INPUT_LENGTH > 0 : "Input should not be empty.";
+        String command = inputs[0];
         switch (command) {
         case "bye":
             return new ExitCommand();
@@ -46,6 +48,7 @@ public class Parser {
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: unmark [task number]");
             }
+            return new MarkCommand(Integer.parseInt(inputs[1]), false);   
         case "delete":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: delete [task number]");
