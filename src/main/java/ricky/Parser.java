@@ -38,26 +38,33 @@ public class Parser {
         assert INPUT_LENGTH > 0 : "Input should not be empty.";
         String command = inputs[0];
         switch (command) {
+        case "b":
         case "bye":
             return new ExitCommand();
+        case "l":
         case "list":
             return new ListCommand();
+        case "m":
         case "mark":
+        case "um":
         case "unmark":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: unmark [task number]");
             }
-            return new MarkCommand(Integer.parseInt(inputs[1]), command.equals("mark"));
+            return new MarkCommand(Integer.parseInt(inputs[1]), command.equals("mark") || command.equals("m"));
+        case "d":
         case "delete":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: delete [task number]");
             }
             return new DeleteCommand(Integer.parseInt(inputs[1]));
+        case "td":
         case "todo":
             if (inputs.length == 1) {
                 throw new RickyException("OOPS!!! The description of a todo cannot be empty.");
             }
-            return new AddCommand(new ToDo(input.substring(5)));
+            return new AddCommand(new ToDo(input.substring(command.length() + 1)));
+        case "ddl":
         case "deadline":
             if (inputs.length <= 3) {
                 throw new RickyException("Please follow the format: deadline [task] /by [" + DATE_TIME_FORMAT + "]");
@@ -70,6 +77,7 @@ public class Parser {
                 throw new RickyException("Please follow the format: deadline [task] /by [" + DATE_TIME_FORMAT + "]");
             }
             return new AddCommand(new Deadline(deadlineInputs[0], byDate));
+        case "e":
         case "event":
             if (inputs.length <= 5) {
                 throw new RickyException(String.format("Please follow the format: event [task] /from [%s] /to [%s]",
@@ -86,11 +94,12 @@ public class Parser {
                         DATE_TIME_FORMAT));
             }
             return new AddCommand(new Event(eventInputs[0], fromDate, toDate));
+        case "f":
         case "find":
             if (inputs.length <= 1) {
                 throw new RickyException("Please follow the format: find [keyword]");
             }
-            return new FindCommand(input.substring(5));
+            return new FindCommand(input.substring(command.length() + 1));
         default:
             return new InvalidCommand();
         }
