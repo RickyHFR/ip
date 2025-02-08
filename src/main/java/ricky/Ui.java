@@ -87,7 +87,7 @@ public class Ui {
      * Prints an error message indicating that there was an error loading the file.
      */
     public void showLoadingError() {
-        System.out.println("Error loading file. Starting with an empty task list.");
+        System.out.println("Error loading file.");
     }
 
     /**
@@ -122,5 +122,9 @@ public class Ui {
             }
             return output;
         }
+    }
+
+    public String getDuplicateMessage(Task task) {
+        return "This task already exists in your list:\n" + task;
     }
 }

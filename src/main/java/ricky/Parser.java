@@ -40,18 +40,18 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "mark":
-            if (INPUT_LENGTH != 2) {
-                throw new RickyException("OOPS!!! Please specify the task number.");
+            if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
+                throw new RickyException("Please follow the format: mark [task number]");
             }
             return new MarkCommand(Integer.parseInt(inputs[1]), true);
         case "unmark":
-            if (INPUT_LENGTH != 2) {
-                throw new RickyException("OOPS!!! Please specify the task number.");
+            if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
+                throw new RickyException("Please follow the format: unmark [task number]");
             }
-            return new MarkCommand(Integer.parseInt(inputs[1]), false);
+            return new MarkCommand(Integer.parseInt(inputs[1]), false);   
         case "delete":
-            if (INPUT_LENGTH == 1) {
-                throw new RickyException("OOPS!!! Please specify the task number to delete.");
+            if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
+                throw new RickyException("Please follow the format: delete [task number]");
             }
             return new DeleteCommand(Integer.parseInt(inputs[1]));
         case "todo":
@@ -60,6 +60,9 @@ public class Parser {
             }
             return new AddCommand(new ToDo(input.substring(5)));
         case "deadline":
+            if (inputs.length <= 3) {
+                throw new RickyException("Please follow the format: deadline [task] /by [yyyy-mm-dd-HHmm]");
+            }
             String[] deadlineInputs = input.substring(9).split(" /by ");
             LocalDateTime by;
             try {
@@ -69,6 +72,10 @@ public class Parser {
             }
             return new AddCommand(new Deadline(deadlineInputs[0], by));
         case "event":
+            if (inputs.length <= 5) {
+                throw new RickyException("Please follow the format: event [task] /from [yyyy-mm-dd-HHmm]" +
+                        " /to [yyyy-mm-dd-HHmm]");
+            }
             String[] eventInputs = input.substring(6).split(" /from | /to ");
             LocalDateTime from;
             LocalDateTime to;
@@ -76,12 +83,12 @@ public class Parser {
                 from = LocalDateTime.parse(eventInputs[1], DATE_TIME_FORMATTER);
                 to = LocalDateTime.parse(eventInputs[2], DATE_TIME_FORMATTER);
             } catch (Exception e) {
-                throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
+                throw new RickyException("Please follow the format: deadline [task] /by [yyyy-mm-dd-HHmm]");
             }
             return new AddCommand(new Event(eventInputs[0], from, to));
         case "find":
-            if (INPUT_LENGTH == 1) {
-                throw new RickyException("OOPS!!! Please specify the keyword to find.");
+            if (inputs.length <= 1) {
+                throw new RickyException("Please follow the format: find [keyword]");
             }
             return new FindCommand(input.substring(5));
         default:

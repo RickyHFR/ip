@@ -99,6 +99,16 @@ public class TaskList {
         return new TaskList(matchingTasks);
     }
 
+    public TaskList checkDuplicate(Task task) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.toString().equals(task.toString())) {
+                matchingTasks.add(t);
+            }
+        }
+        return new TaskList(matchingTasks);
+    }
+
     /**
      * Returns the list of tasks.
      *

@@ -9,7 +9,7 @@ public class Task {
 
     protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
     protected String description;
-    protected boolean isDone;
+    public boolean isDone;
 
     /**
      * Constructs a Task with the specified description.
