@@ -33,8 +33,10 @@ public class Parser {
      * @throws RickyException If the user input is invalid.
      */
     public static Command parse(String input) throws RickyException {
-        String[] inputs = input.trim().split(" ");
-        String command = inputs[0].trim().toLowerCase();
+        String[] inputs = input.split(" ");
+        int INPUT_LENGTH = inputs.length;
+        assert INPUT_LENGTH > 0 : "Input should not be empty.";
+        String command = inputs[0];
         switch (command) {
         case "bye":
             return new ExitCommand();
