@@ -81,11 +81,12 @@ public class Storage {
                     break;
                 default:
                     throw new RickyException("Invalid task type in file: " + filePath);
-            }
+                }
             }
         } catch (FileNotFoundException e) {
             throw new RickyException("File not found: " + filePath);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RickyException("Error reading file: " + filePath);
         }
         return tasks;
@@ -116,9 +117,9 @@ public class Storage {
      */
     public void createFile() {
         try {
-            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
         } catch (IOException e) {
-            System.err.println("Error creating directory: " + filePath.getParent());
+            System.err.println("Error creating file: " + filePath);
         }
     }
 }

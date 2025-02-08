@@ -25,8 +25,9 @@ public class Ricky {
         try {
             tasks = new TaskList(storage.loadTasks());
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             ui.showLoadingError();
-            tasks = new TaskList();
+
         }
     }
 

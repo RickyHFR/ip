@@ -1,5 +1,6 @@
 package ricky.command;
 
+import ricky.RickyException;
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
@@ -31,11 +32,20 @@ public class MarkCommand extends Command {
      * @param storage The storage to save the task list.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws RickyException {
+        if (index < 1 || index > tasks.size()) {
+            throw new RickyException("Invalid task number!");
+        }
         if (isDone) {
+            if (tasks.get(index - 1).isDone) {
+                throw new RickyException("Task is already done!");
+            }
             tasks.markDone(index - 1);
             return ui.getMarkMessage(tasks.get(index - 1));
         } else {
+            if (!tasks.get(index - 1).isDone) {
+                throw new RickyException("Task is not completed yet!");
+            }
             tasks.markUndone(index - 1);
             return ui.getUnmarkMessage(tasks.get(index - 1));
         }

@@ -32,7 +32,11 @@ public class AddCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.add(task);
-        return ui.getAddMessage(task, tasks);
+        if (tasks.checkDuplicate(task).size() > 0) {
+            return ui.getDuplicateMessage(task);
+        } else {
+            tasks.add(task);
+            return ui.getAddMessage(task, tasks);
+        }
     }
 }

@@ -3,6 +3,7 @@
  */
 package ricky.command;
 
+import ricky.RickyException;
 import ricky.Storage;
 import ricky.task.TaskList;
 import ricky.Ui;
@@ -30,7 +31,10 @@ public class DeleteCommand extends Command {
      * @param storage The storage to save the task list.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws RickyException {
+        if (index < 1 || index > tasks.size()) {
+            throw new RickyException("Invalid task number!");
+        }
         String output = ui.getDeleteMessage(tasks.get(index - 1), tasks);
         tasks.delete(index - 1);
         return output;
