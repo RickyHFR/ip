@@ -37,13 +37,13 @@ public class MarkCommand extends Command {
             throw new RickyException("Invalid task number!");
         }
         if (isDone) {
-            if (tasks.get(index - 1).isDone) {
+            if (tasks.get(index - 1).getIsDone()) {
                 throw new RickyException("Task is already done!");
             }
             tasks.markDone(index - 1);
             return ui.getMarkMessage(tasks.get(index - 1));
         } else {
-            if (!tasks.get(index - 1).isDone) {
+            if (!tasks.get(index - 1).getIsDone()) {
                 throw new RickyException("Task is not completed yet!");
             }
             tasks.markUndone(index - 1);

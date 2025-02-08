@@ -31,6 +31,9 @@ public class MainWindow extends AnchorPane {
             new Image(this.getClass().getResourceAsStream("/images/black-and-white-cat-breeds.png"),
                     150, 150, false, false);
 
+    /**
+     * Initializes the scroll pane to scroll to the bottom when the dialog container is updated.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -57,6 +60,7 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, rickyImage, commandType)
         );
+        ricky.saveTasks();
         userInput.clear();
     }
 }

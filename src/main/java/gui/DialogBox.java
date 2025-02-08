@@ -25,6 +25,12 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
     private String commandType;
 
+    /**
+     * Constructs a dialog box with the specified text and image.
+     *
+     * @param text The text to be displayed.
+     * @param img  The image to be displayed.
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -32,6 +38,7 @@ public class DialogBox extends HBox {
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
+            System.err.println("Error loading DialogBox FXML: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -50,6 +57,11 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Changes the style of the dialog box based on the command type.
+     *
+     * @param commandType The type of command.
+     */
     private void changeDialogStyle(String commandType) {
         switch(commandType) {
         case "AddCommand":
@@ -66,10 +78,25 @@ public class DialogBox extends HBox {
         }
     }
 
+    /**
+     * Returns a dialog box with the specified text and image representing the user.
+     *
+     * @param text The text to be displayed.
+     * @param img  The image to be displayed.
+     * @return A dialog box with the specified text and image representing the user.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Returns a dialog box with the specified text and image representing Duke.
+     *
+     * @param text The text to be displayed.
+     * @param img  The image to be displayed.
+     * @param commandType The type of command.
+     * @return A dialog box with the specified text and image representing Duke.
+     */
     public static DialogBox getDukeDialog(String text, Image img, String commandType) {
         var db = new DialogBox(text, img);
         db.flip();

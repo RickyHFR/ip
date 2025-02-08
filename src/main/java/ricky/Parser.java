@@ -13,14 +13,17 @@ import ricky.command.ListCommand;
 import ricky.command.MarkCommand;
 import ricky.task.Deadline;
 import ricky.task.Event;
+import ricky.task.TaskList;
 import ricky.task.ToDo;
+
 
 /**
  * Parses user input into commands.
  */
 public class Parser {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HHmm";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
     /**
      * Parses the user input and returns the corresponding command.
@@ -46,6 +49,7 @@ public class Parser {
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: unmark [task number]");
             }
+            return new MarkCommand(Integer.parseInt(inputs[1]), false);
         case "delete":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: delete [task number]");
@@ -58,31 +62,32 @@ public class Parser {
             return new AddCommand(new ToDo(input.substring(5)));
         case "deadline":
             if (inputs.length <= 3) {
-                throw new RickyException("Please follow the format: deadline [task] /by [yyyy-mm-dd-HHmm]");
+                throw new RickyException("Please follow the format: deadline [task] /by [" + DATE_TIME_FORMAT + "]");
             }
             String[] deadlineInputs = input.substring(9).split(" /by ");
-            LocalDateTime by;
+            LocalDateTime byDate;
             try {
-                by = LocalDateTime.parse(deadlineInputs[1], DATE_TIME_FORMATTER);
+                byDate = LocalDateTime.parse(deadlineInputs[1], DATE_TIME_FORMATTER);
             } catch (Exception e) {
-                throw new RickyException("Please follow the format: yyyy-mm-dd-HHmm");
+                throw new RickyException("Please follow the format: deadline [task] /by [" + DATE_TIME_FORMAT + "]");
             }
-            return new AddCommand(new Deadline(deadlineInputs[0], by));
+            return new AddCommand(new Deadline(deadlineInputs[0], byDate));
         case "event":
             if (inputs.length <= 5) {
-                throw new RickyException("Please follow the format: event [task] /from [yyyy-mm-dd-HHmm]" +
-                        " /to [yyyy-mm-dd-HHmm]");
+                throw new RickyException(String.format("Please follow the format: event [task] /from [%s] /to [%s]",
+                        DATE_TIME_FORMAT, DATE_TIME_FORMAT));
             }
             String[] eventInputs = input.substring(6).split(" /from | /to ");
-            LocalDateTime from;
-            LocalDateTime to;
+            LocalDateTime fromDate;
+            LocalDateTime toDate;
             try {
-                from = LocalDateTime.parse(eventInputs[1], DATE_TIME_FORMATTER);
-                to = LocalDateTime.parse(eventInputs[2], DATE_TIME_FORMATTER);
+                fromDate = LocalDateTime.parse(eventInputs[1], DATE_TIME_FORMATTER);
+                toDate = LocalDateTime.parse(eventInputs[2], DATE_TIME_FORMATTER);
             } catch (Exception e) {
-                throw new RickyException("Please follow the format: deadline [task] /by [yyyy-mm-dd-HHmm]");
+                throw new RickyException(String.format("Please follow the format: deadline [task] /by [%s]",
+                        DATE_TIME_FORMAT));
             }
-            return new AddCommand(new Event(eventInputs[0], from, to));
+            return new AddCommand(new Event(eventInputs[0], fromDate, toDate));
         case "find":
             if (inputs.length <= 1) {
                 throw new RickyException("Please follow the format: find [keyword]");
@@ -90,6 +95,50 @@ public class Parser {
             return new FindCommand(input.substring(5));
         default:
             return new InvalidCommand();
+        }
+    }
+
+    /**
+     * Parses the data from the saved file and adds the tasks to the task list.
+     *
+     * @param data  The data from the saved file.
+     * @param tasks The task list to add the tasks to.
+     * @throws RickyException If the data is invalid.
+     */
+    public static void parseSavedTask(String[] data, TaskList tasks) throws RickyException {
+        switch (data[0]) {
+        case "T":
+            if (data.length != 3 || (!data[1].equals("0") && !data[1].equals("1"))) {
+                throw new RickyException("Invalid task in file.");
+            }
+            tasks.add(new ToDo(data[2]));
+            if (data[1].equals("1")) {
+                tasks.get(tasks.size() - 1).markDone();
+            }
+            break;
+        case "D":
+            if (data.length != 4 || (!data[1].equals("0") && !data[1].equals("1"))) {
+                throw new RickyException("Invalid task in file.");
+            }
+            tasks.add(new Deadline(data[2], LocalDateTime.parse(data[3],
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
+            if (data[1].equals("1")) {
+                tasks.get(tasks.size() - 1).markDone();
+            }
+            break;
+        case "E":
+            if (data.length != 5 || (!data[1].equals("0") && !data[1].equals("1"))) {
+                throw new RickyException("Invalid task in file.");
+            }
+            tasks.add(new Event(data[2], LocalDateTime.parse(data[3],
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+                    LocalDateTime.parse(data[4], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
+            if (data[1].equals("1")) {
+                tasks.get(tasks.size() - 1).markDone();
+            }
+            break;
+        default:
+            throw new RickyException("Invalid task type in file.");
         }
     }
 }

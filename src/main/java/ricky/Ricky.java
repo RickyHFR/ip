@@ -23,7 +23,7 @@ public class Ricky {
         storage = new Storage(filePath);
         ui = new Ui();
         try {
-            tasks = new TaskList(storage.loadTasks());
+            tasks = storage.loadTasks();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ui.showLoadingError();
@@ -48,7 +48,22 @@ public class Ricky {
         }
     }
 
+    /**
+     * Returns the command type of the last command executed
+     * @return The command type of the last command executed
+     */
     public String getCommandType() {
         return commandType;
+    }
+
+    /**
+     * Saves the tasks to the file.
+     */
+    public void saveTasks() {
+        try {
+            storage.storeTasks(tasks);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
