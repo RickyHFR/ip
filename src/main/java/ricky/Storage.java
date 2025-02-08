@@ -3,7 +3,6 @@ package ricky;
 import ricky.task.Task;
 import ricky.task.TaskList;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -11,7 +10,6 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 
 /**
  * Handles the loading and saving of tasks to a file.
@@ -35,21 +33,19 @@ public class Storage {
      * @throws RickyException If the file contains invalid tasks.
      * @throws IOException If an I/O error occurs.
      */
-    public TaskList loadTasks() throws RickyException, IOException {
+    public TaskList loadTasks() throws RickyException {
         TaskList tasks = new TaskList();
         if (!Files.exists(filePath)) {
-            this.createFile();
+            createFile();
         }
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(" \\| ");
-                Parser.parseSavedTask(data, tasks);
+                Parser.parseSavedTask(line.split(" \\| "), tasks);
             }
         } catch (FileNotFoundException e) {
             throw new RickyException("File not found: " + filePath);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RickyException("Error reading file: " + filePath);
         }
         return tasks;
@@ -63,7 +59,7 @@ public class Storage {
      */
     public void storeTasks(TaskList tasks) throws RickyException {
         if (!Files.exists(filePath)) {
-            this.createFile();
+            createFile();
         }
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Task task : tasks.getTasks()) {

@@ -43,15 +43,11 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "mark":
-            if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
-                throw new RickyException("Please follow the format: mark [task number]");
-            }
-            return new MarkCommand(Integer.parseInt(inputs[1]), true);
         case "unmark":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: unmark [task number]");
             }
-            return new MarkCommand(Integer.parseInt(inputs[1]), false);
+            return new MarkCommand(Integer.parseInt(inputs[1]), command.equals("mark"));
         case "delete":
             if (inputs.length != 2 || !inputs[1].matches("\\d+")) {
                 throw new RickyException("Please follow the format: delete [task number]");
