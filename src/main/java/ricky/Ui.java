@@ -124,6 +124,12 @@ public class Ui {
         }
     }
 
+    /**
+     * Returns a message indicating that a task already exists in the list.
+     *
+     * @param task The task that already exists.
+     * @return the duplicate message.
+     */
     public String getDuplicateMessage(Task task) {
         return "This task already exists in your list:\n" + task;
     }

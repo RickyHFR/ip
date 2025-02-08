@@ -31,6 +31,6 @@ public class ToDo extends Task {
      */
     @Override
     public String storeInfo() {
-        return String.format("T | %d | %s", isDone ? 1 : 0, description);
+        return String.format("T | %d | %s", super.getIsDone() ? 1 : 0, description);
     }
 }

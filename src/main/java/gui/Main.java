@@ -19,6 +19,11 @@ public class Main extends Application {
     private static final Path filePath = Paths.get("src", "main", "data", "ricky.txt");
     private Ricky ricky = new Ricky(filePath);
 
+    /**
+     * Starts the application.
+     *
+     * @param stage The stage to start.
+     */
     @Override
     public void start(Stage stage) {
         try {
@@ -28,10 +33,18 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
+            stage.setOnCloseRequest(event -> handleWindowClose());
             fxmlLoader.<MainWindow>getController().setRicky(ricky);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Saves the tasks when the window is closed.
+     */
+    private void handleWindowClose() {
+        ricky.saveTasks();
     }
 }

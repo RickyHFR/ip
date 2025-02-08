@@ -1,10 +1,8 @@
 package ricky;
 
-import ricky.task.Deadline;
-import ricky.task.Event;
 import ricky.task.Task;
 import ricky.task.TaskList;
-import ricky.task.ToDo;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,9 +11,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+
 
 /**
  * Handles the loading and saving of tasks to a file.
@@ -39,8 +35,8 @@ public class Storage {
      * @throws RickyException If the file contains invalid tasks.
      * @throws IOException If an I/O error occurs.
      */
-    public ArrayList<Task> loadTasks() throws RickyException, IOException {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList loadTasks() throws RickyException, IOException {
+        TaskList tasks = new TaskList();
         if (!Files.exists(filePath)) {
             this.createFile();
         }
@@ -48,40 +44,7 @@ public class Storage {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(" \\| ");
-                switch (data[0]) {
-                case "T":
-                    if (data.length != 3 || (!data[1].equals("0") && !data[1].equals("1"))) {
-                        throw new RickyException("Invalid task in file: " + filePath);
-                    }
-                    tasks.add(new ToDo(data[2]));
-                    if (data[1].equals("1")) {
-                        tasks.get(tasks.size() - 1).markDone();
-                    }
-                    break;
-                case "D":
-                    if (data.length != 4 || (!data[1].equals("0") && !data[1].equals("1"))) {
-                        throw new RickyException("Invalid task in file: " + filePath);
-                    }
-                    tasks.add(new Deadline(data[2], LocalDateTime.parse(data[3],
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
-                    if (data[1].equals("1")) {
-                        tasks.get(tasks.size() - 1).markDone();
-                    }
-                    break;
-                case "E":
-                    if (data.length != 5 || (!data[1].equals("0") && !data[1].equals("1"))) {
-                        throw new RickyException("Invalid task in file: " + filePath);
-                    }
-                    tasks.add(new Event(data[2], LocalDateTime.parse(data[3],
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
-                            LocalDateTime.parse(data[4], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
-                    if (data[1].equals("1")) {
-                        tasks.get(tasks.size() - 1).markDone();
-                    }
-                    break;
-                default:
-                    throw new RickyException("Invalid task type in file: " + filePath);
-                }
+                Parser.parseSavedTask(data, tasks);
             }
         } catch (FileNotFoundException e) {
             throw new RickyException("File not found: " + filePath);

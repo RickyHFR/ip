@@ -9,7 +9,7 @@ public class Task {
 
     protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
     protected String description;
-    public boolean isDone;
+    private boolean isDone;
 
     /**
      * Constructs a Task with the specified description.
@@ -70,5 +70,14 @@ public class Task {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the completion status of the task.
+     *
+     * @return The completion status of the task.
+     */
+    public boolean getIsDone() {
+        return isDone;
     }
 }
