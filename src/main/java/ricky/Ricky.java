@@ -12,7 +12,7 @@ public class Ricky {
     private TaskList tasks;
     private final Ui ui;
     private String commandType;
-    private boolean firstTime = true;
+    private boolean isFirstTime = true;
 
     /**
      * Constructs a Ricky object with the specified file path.
@@ -35,8 +35,8 @@ public class Ricky {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        if (firstTime) {
-            firstTime = false;
+        if (isFirstTime) {
+            isFirstTime = false;
             return ui.getWelcomeMessage();
         }
         try {
