@@ -32,9 +32,7 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws RickyException {
-        assert index > 0 : "Index should be greater than 0";
-        assert index <= tasks.size() : "Index should be less than or equal to the number of tasks";
-        if (index <= tasks.size()) {
+        if (index > tasks.size() || index < 1) {
             throw new RickyException("The task index is out of range.");
         }
         String output = ui.getDeleteMessage(tasks.get(index - 1), tasks);

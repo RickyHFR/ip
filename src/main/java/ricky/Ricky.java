@@ -42,6 +42,10 @@ public class Ricky {
         try {
             Command c = Parser.parse(input);
             commandType = c.getClass().getSimpleName();
+            if (commandType.equals("ExitCommand")) {
+                saveTasks();
+                System.exit(0);
+            }
             return c.execute(tasks, ui, storage);
         } catch (RickyException e) {
             return e.getMessage();
