@@ -117,3 +117,36 @@ Example: `bye`
 ``` 
 Bye. Hope to see you again soon!
 ```
+
+## Saving Data
+
+Ricky automatically saves your tasks to a local file. You can access your tasks even after closing the program.
+
+## Command Summary
+
+| Action | Format, Examples |
+
+|--------|------------------|
+
+| List | `list` |
+
+| Todo | `todo DESCRIPTION`, e.g. `todo Buy groceries` |
+
+| Deadline | `deadline DESCRIPTION /by DATE_TIME`, e.g. `deadline Assignment /by 2024-12-01 23:59` |
+
+| Event | `event DESCRIPTION /at START_DATE_TIME to END_DATE_TIME`, e.g. `event Meeting /at 2024-12-02 14:00 to 2024-12-02 16:00` |
+
+| Mark as Done | `mark INDEX`, e.g. `mark 1` |
+
+| Mark as Undone | `unmark INDEX`, e.g. `unmark 1` |
+
+| Delete | `delete INDEX`, e.g. `delete 1` |
+
+| Find | `find KEYWORD`, e.g. `find Assignment` |
+
+| Exit | `bye` |
+
+## Acknowledgements
+
+This project is based on the Duke project created by the [SE-EDU initiative](https://se-education.org/).
+``
