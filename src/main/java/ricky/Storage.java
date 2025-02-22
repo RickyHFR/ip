@@ -76,9 +76,10 @@ public class Storage {
      */
     public void createFile() {
         try {
+            Files.createDirectories(filePath.getParent());
             Files.createFile(filePath);
         } catch (IOException e) {
-            System.err.println("Error creating file: " + filePath);
+            System.out.println("Error creating file: " + filePath);
         }
     }
 }
